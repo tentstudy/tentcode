@@ -10,13 +10,13 @@ function selectTheme(theme) {
     head.appendChild(link);
   }
   editor.setOption("theme", theme);
-  location.hash = "#" + theme;
+  // location.hash = "#" + theme;
 }
-var choice = (location.hash && location.hash.slice(1)) || (document.location.search && decodeURIComponent(document.location.search.slice(1)));
-if (choice) {
-  $('.customSelect .selLabel').text(choice);
-  editor.setOption("theme", choice);
-}
+// var choice = (location.hash && location.hash.slice(1)) || (document.location.search && decodeURIComponent(document.location.search.slice(1)));
+// if (choice) {
+//   $('.customSelect .selLabel').text(choice);
+//   editor.setOption("theme", choice);
+// }
 CodeMirror.on(window, "hashchange", function () {
   var theme = location.hash.slice(1);
   if (theme) { $('.customSelect .selLabel').text(theme); selectTheme(theme); }

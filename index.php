@@ -1,11 +1,10 @@
 <?php
-    require_once 'action/check-login.php';
-    $idCode = 'new-code';
-    if(!empty($_GET['idCode'])){
-        $idCode = $_GET['idCode'];
-    }
-    require_once 'action/set-value.php';
-    echo "<script> var idCode = '{$idCode}';</script>";
+require_once 'action/check-login.php';
+$idCode = 'new-code';
+if(!empty($_GET['idCode'])){
+$idCode = $_GET['idCode'];
+}
+require_once 'action/set-value.php';
 ?>
 <!doctype html>
 <html>
@@ -79,8 +78,29 @@
         }
         }
         </style>
+        <?php echo "<script> 
+            var idCode = '{$idCode}';
+        </script>"; ?>
     </head>
     <body>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                    <a href="login.php?action=save" id="login-to-save" class="btn btn-primary">Login to save</a>
+                        <button type="button" id="not-now" class="btn btn-default" data-dismiss="modal">Lúc khác</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <header>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -165,10 +185,10 @@
                     </aside>
                     <article class="col-md-7 col-sm-8 content" style="z-index: 1">
                         <form class="form-inline">
-                            <?php g('btn-edit') ?>
+                            <?php if ($idCode !== 'new-code'): ?>
                             <button class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                             <button class="btn btn-default"><span class="glyphicon glyphicon-duplicate"></span> Fork</button>
-                            <?php g('btn-download') ?>
+                            <button class="btn btn-default"><span class="glyphicon glyphicon-download-alt"></span> Download</button>
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="shareDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 Share
@@ -180,6 +200,7 @@
                                     <li><a href="#">Get link to share</a></li>
                                 </ul>
                             </div>
+                            <?php endif ?>
                         </form>
                         <br />
                         <div class="form-inline">
@@ -328,8 +349,8 @@
                                     <option>72</option>
                                 </select>
                             </div>
-                            <button type="submit" id="save-code" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-                            <textarea id="code" name="code" placeholder="Code goes here..."><?php g('code') ?></textarea>
+                            <?php g('btn-save') ?>
+                            <textarea id="code" name="code" placeholder="Code goes here..."><?php g('code') ?>ádasda</textarea>
                         </div>
                         <br />
                     </article>

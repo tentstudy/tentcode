@@ -1,8 +1,21 @@
 <?php
+	session_start();
 	require_once __DIR__ . '/../db/connect.php';
-	function randomIdCode()
+	  function generateRandomString($length = 10) {
+   
+  }
+	function randomIdCode($length = 8)
 	{
-		return 'VYIgZM';
+	 	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $charactersLength = strlen($characters);
+	    $randomString;
+	    do{
+	    	$randomString = '';
+		    for ($i = 0; $i < $length; $i++) {
+		        $randomString .= $characters[rand(0, $charactersLength - 1)];
+		    }
+		}while (file_exists("../code-store/{$randomString}"));
+	    return $randomString;
 	}
 	$fomat = array(
 		"apl" => "APL",
@@ -121,23 +134,37 @@
 		"yaml-frontmatter" => "YAML",
 		"z80" => "Z80"
 	);
-	$code = $_POST['code'];
-	$filename = $_POST['filename'];
-	$idCode = $_POST['idCode'];
-	if($idCode == 'new-code'){
-		$idCode = randomIdCode();
-	}
-	
-	$id = $_COOKIE['id'];
-
-	$path = "../code-store/{$id}_{$filename}";
+	// dữ liệu đầu vào
+	$code   = $_POST['code'];
+	$idUser = empty($_COOKIE['id']) ? '0' : $_COOKIE['id'];
+	$public = empty($_POST['public']) ? true : $_POST['public'];
+	$title  = empty($_POST['title']) ? 'Untitled' : $_POST['title'];
+	$idCode = ($_POST['idCode'] == 'new-code') ? randomIdCode() : $_POST['idCode'];
+	date_default_timezone_set("Asia/Ho_Chi_Minh");
+	$updateTime = $createAt = strtotime('now');
+	$_SESSION['tempId'] = $idCode;
+	// lưu vào file
+	$path = "../code-store/{$idCode}";
 	file_put_contents($path, $code);
-
-	// $sql = "INSERT INTO `user` (`idUsser`, `name`, `token`) VALUES ('1', '1', '1');"
-	$sql = "INSERT INTO `code` (`idUser`, `idCode`, `filename`) VALUES ('{$id}', '{$idCode}', '{$filename}')";
-	$conn->query($sql);
-
+	// lưu vào database
+	// tạo mới
+	$sql = "INSERT INTO `code` (`id_user`, `id_code`, `title`, `public`, `create_at`, `update_time`) VALUES ('{$idUser}', '{$idCode}', '{$title}', '{$public}', '{$createAt}', '{$updateTime}')";
+	if ($conn->query($sql) === TRUE) {
+	    // echo "New record created successfully";
+	} else {
+	    echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	// update
+	// $sql = "UPDATE `code` SET (`update_time`='{$updateTime}') WHERE `id_code`='{$idCode}' and `id_user`='{$idUser}' and `id_user` <> '0'";
+	// $conn->query($sql);
 
 
 	$conn->close();
+	$_SESSION['tempId'] = $idCode;
+	$res = array(
+		'idCode' => $idCode,
+		'idUser' => $idUser
+	);
+	echo json_encode($res);
+	// echo "$_COOKIE['tempId']";
 ?>

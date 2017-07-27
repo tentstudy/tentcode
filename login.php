@@ -1,5 +1,10 @@
 <?php
+	session_start();
+	if(!empty($_GET['action'])){
+		$_SESSION['action'] = 'save';
+	}
 	require_once __DIR__ . '/lib/curl.php';
+	require_once __DIR__ . '/db/connect.php';
 	define('client_id','111239596202717');
 	define('client_secret','b1464b01303b3cb278fc6833d0e81450');
 	define('redirect_uri', 'http://tentcode.dev/login.php');
@@ -65,6 +70,18 @@
 		return login();
 	}
 	
+	/*set user 0 giả quyền cho nó*/
+	if(!empty($_SESSION['tempId']) && !empty($_SESSION['action']) && $_SESSION['action'] == 'save'){
+		$url  = "https://graph.facebook.com/v2.3/me?access_token={$_COOKIE['token']}";
+		$json = getJSON($url);
+		$id = $json->id;
+		$idCode = $_SESSION['tempId'];
+		$sql = "UPDATE code SET id_user='{$id}' WHERE id_code='{$idCode}'";
+		$conn->query($sql);
+		$conn->close();
+		header("Location: ./{$idCode}");
+		exit();
+	}
 	header('Location: ./');
 	// echo "đăng nhập thành công <br> {$token}";
 ?>

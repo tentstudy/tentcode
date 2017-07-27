@@ -2,11 +2,11 @@
 	require_once __DIR__ . '/../lib/curl.php';
 	function checkLogin()
 	{
-		$token = '';
-		if(!empty($_COOKIE['token'])){
-			$token = $_COOKIE['token'];
+		if(empty($_COOKIE['token'])){
+			return false;
 		}
-		$url = "https://graph.facebook.com/v2.3/me?access_token={$token}";
+
+		$url = "https://graph.facebook.com/v2.3/me?access_token={$_COOKIE['token']}";
 		$json = getJSON($url);
 
 		if(empty($json->id) || empty($json->name)){

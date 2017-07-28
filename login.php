@@ -1,7 +1,10 @@
 <?php
 	session_start();
 	if(!empty($_GET['action'])){
-		$_SESSION['action'] = 'save';
+		$_SESSION['action'] = $_GET['action'];
+	}
+  if(!empty($_GET['prev'])){ //lưu lại trang phía trước để đăng nhập xong điều hướng lại đó
+		$_SESSION['prev'] = $_GET['prev'];
 	}
 	require_once __DIR__ . '/lib/curl.php';
 	require_once __DIR__ . '/db/connect.php';
@@ -41,7 +44,7 @@
 		}
 		return $json->access_token;
 	}
-	function saveUser($token)
+	function saveUser($conn, $token, &$id)
 	{
 		$url = "https://graph.facebook.com/v2.3/me?access_token={$token}";
 		$json = getJSON($url);
@@ -52,14 +55,26 @@
 		echo('<pre>' . json_encode($json, JSON_PRETTY_PRINT) . '</pre>');
 	
 		$timeLive = 60*60*24*60; /*60 ngày*/
-		setcookie('id',  $json->id, time() + $timeLive);
+    $id = $json->id;
+    $name = $json->name;
+		setcookie('id', $id , time() + $timeLive);
 		setcookie('token', $token, time() + $timeLive);
-		setcookie('name',  $json->name, time() + $timeLive);
-		}
+		setcookie('name',  $name, time() + $timeLive);
+    $sql = "SELECT id FROM user where id_user = '{$id}'";
+    $result = $conn->query($sql);
+    if ($result->num_rows === 0) { //kiểm tra đã có ngườ dùng chưa
+      $sql = "INSERT INTO user (id_user, name, token)
+              VALUES ('{$id}', '{$name}', '{$token}')";
+      $conn->query($sql);
+    } else { //có rồi thì cập lại tên
+      $sql = "UPDATE user SET name = '{$name}'";
+      $conn->query($sql);
+    }
+	}
 
 	if(!empty($_GET['code'])){
 		$token = getTokenFromCode();
-		saveUser($token);
+		saveUser($conn, $token, $id); //lấy id ra để lát sử dụng cập nhật quyền cho code
 	}
 
 	if(!empty($_COOKIE['token'])){
@@ -69,19 +84,25 @@
 	if(empty($token)){ // nếu chưa đăng nhập thì đăng nhập
 		return login();
 	}
-	
-	/*set user 0 giả quyền cho nó*/
-	if(!empty($_SESSION['tempId']) && !empty($_SESSION['action']) && $_SESSION['action'] == 'save'){
-		$url  = "https://graph.facebook.com/v2.3/me?access_token={$_COOKIE['token']}";
-		$json = getJSON($url);
-		$id = $json->id;
+  $conn->close();
+
+  //cập nhật quyền cho code nếu người dùng chọn Đăng nhập để lưu
+  if (!empty($_SESSION['tempId']) && !empty($_SESSION['action']) && $_SESSION['action'] == 'save'){
+		// $url  = "https://graph.facebook.com/v2.3/me?access_token={$_COOKIE['token']}";
+		// $json = getJSON($url);
+		// $id = $json->id;
 		$idCode = $_SESSION['tempId'];
+    $_SESSION['tempId'] = '';
+    unset($_SESSION['tempId']);
 		$sql = "UPDATE code SET id_user='{$id}' WHERE id_code='{$idCode}'";
+    echo $sql;
 		$conn->query($sql);
 		$conn->close();
 		header("Location: ./{$idCode}");
 		exit();
 	}
-	header('Location: ./');
-	// echo "đăng nhập thành công <br> {$token}";
+  //không có trang phía trước thì điều hướng về trang chủ
+  $location = empty($_SESSION['prev']) ? '/' : $_SESSION['prev'];
+  unset($_SESSION['prev']);
+	header("Location: {$location}");
 ?>

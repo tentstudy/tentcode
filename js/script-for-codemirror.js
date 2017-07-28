@@ -10,13 +10,7 @@ function selectTheme(theme) {
     head.appendChild(link);
   }
   editor.setOption("theme", theme);
-  // location.hash = "#" + theme;
 }
-// var choice = (location.hash && location.hash.slice(1)) || (document.location.search && decodeURIComponent(document.location.search.slice(1)));
-// if (choice) {
-//   $('.customSelect .selLabel').text(choice);
-//   editor.setOption("theme", choice);
-// }
 CodeMirror.on(window, "hashchange", function () {
   var theme = location.hash.slice(1);
   if (theme) { $('.customSelect .selLabel').text(theme); selectTheme(theme); }
@@ -51,6 +45,7 @@ $(document).ready(function() {
   editor.setOption('autoCloseBrackets', true);
   editor.setOption('matchBrackets', true);
   editor.setOption('keyMap', 'sublime');
+  editor.setOption('readOnly', initReadOnly);
   $('#selectLanguage').val(initLanguage);
   changeLanguage(initLanguage);
   selectTheme(initTheme);

@@ -1,2 +1,3 @@
 RewriteEngine On
+RewriteRule ^edit/([a-zA-Z0-9]+)$ /index.php?action=edit&idCode=$1
 RewriteRule ^([a-zA-Z0-9]+)$ /index.php?idCode=$0

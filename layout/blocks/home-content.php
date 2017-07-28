@@ -12,13 +12,13 @@
             <button class="btn btn-default"><span class="glyphicon glyphicon-download-alt"></span> Download</button>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="shareDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Share
+                <span class="glyphicon glyphicon-share"></span> Share
                 <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="shareDropdown">
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Google +</a></li>
-                    <li><a href="#">Get link to share</a></li>
+                    <li><a href="#" id="btn-share-facebook"><i class="fa fa-facebook-square" aria-hidden="true"></i>  Share on facebook</a></li>
+                    <!-- <li><a href="#">Google +</a></li> -->
+                    <li><a href="#" id="btn-share-link"><span class="glyphicon glyphicon-link"></span> Get link to share</a></li>
                 </ul>
             </div>
         </form>

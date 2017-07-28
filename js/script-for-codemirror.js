@@ -90,4 +90,15 @@ $(document).ready(function() {
   $('#documentName').on('click', function() {
     $(this).select();
   });
+  $('#btn-share-facebook').on('click', function(){
+    var shareWindow = window.open(
+      'https://www.facebook.com/sharer/sharer.php?s=100&p[url]=' + window.location,
+      'targetWindow',
+      'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600'
+    );
+  });
+  $('#btn-share-link').on('click', function(){
+    copyToClipboard(window.location);
+    showInfo('Link copied to clipboard');
+  });
 });

@@ -13,7 +13,7 @@ function saveCode() {
   };
 	// code rỗng thì không lưu
 	if(code.trim() === ''){
-    alert('Code cannot empty!');
+    showError('Code cannot empty!');
 		return;
   }
   //nếu có modal thì hiện modal (có modal nghĩa là chưa đăng nhập)

@@ -214,8 +214,75 @@
   cursor: pointer;
   letter-spacing: 2px;
 }
+/* Start New style alerts */
+.msg {
+  background: #fefefe;
+  color: #666666;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px;
+  padding-left: 14px;
+  border-top: solid 3px #CCCCCC;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 10px -5px rgba(0,0,0,.08);
+}
+.msg-clear {
+  border-color: #fefefe;
+  box-shadow: 0 7px 10px -5px rgba(0,0,0,.15);
+}
+.msg-info {
+  border-color: #b8dbf2;
+}
+.msg-success {
+  border-color: #cef2b8;
+}
+.msg-warning {
+  border-color: rgba(255,165,0,.5);
+}
+.msg-danger {
+  border-color: #ec8282;
+}
+.msg-primary {
+  border-color: #9ca6f1;
+}
+.msg-magick {
+  border-color: #e0b8f2;
+}
+.msg-info-text {
+  color: #39b3d7;
+}
+.msg-success-text {
+  color: #80d651;
+}
+.msg-warning-text {
+  color: #db9e34;
+}
+.msg-danger-text {
+  color: #c9302c;
+}
+.msg-primary-text {
+  color: rgba(47,106,215,.9);
+}
+.msg-magick-text {
+  color: #bb39d7;
+}
+/* End New styles alert */
 
 /* Start custom css */
+.fa-facebook-square {
+  color: #4C67A1;
+}
+.alert-msg {
+  display: none;
+  padding-left: 15%;
+  position: absolute;
+  float: right;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 10;
+}
 .navbar-brand img {
   position: relative;
   top: -8px;
@@ -253,6 +320,11 @@
 @media (max-width: 991px) {
   .left-bar {
     display: none;
+  }
+}
+@media (max-width: 1235px)  {
+  .CodeMirror {
+    height: calc(100vh - 180px);
   }
 }
 @media (max-width: 767px) {

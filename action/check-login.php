@@ -1,7 +1,11 @@
 <?php
+  session_start();
 	require_once __DIR__ . '/../lib/curl.php';
 	function checkLogin()
 	{
+    if (!empty($_SESSION['id'])) {
+      return true;
+    }
 		if(empty($_COOKIE['token'])){
 			return false;
 		}
@@ -12,6 +16,8 @@
 		if(empty($json->id) || empty($json->name)){
 			return false;
 		}
+    $_SESSION['id'] = $json->id;
+    $_SESSION['name'] = $json->name;
 		return true;
 	}
 	$login = checkLogin();

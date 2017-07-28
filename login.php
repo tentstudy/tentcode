@@ -55,19 +55,17 @@
 		echo('<pre>' . json_encode($json, JSON_PRETTY_PRINT) . '</pre>');
 	
 		$timeLive = 60*60*24*60; /*60 ngày*/
-    $id = $json->id;
-    $name = $json->name;
-		setcookie('id', $id , time() + $timeLive);
+    $_SESSION['id'] = $json->id;
+    $_SESSION['name'] = $json->name;
 		setcookie('token', $token, time() + $timeLive);
-		setcookie('name',  $name, time() + $timeLive);
     $sql = "SELECT id FROM user where id_user = '{$id}'";
     $result = $conn->query($sql);
     if ($result->num_rows === 0) { //kiểm tra đã có ngườ dùng chưa
       $sql = "INSERT INTO user (id_user, name, token)
-              VALUES ('{$id}', '{$name}', '{$token}')";
+              VALUES ('{$_SESSION['id']}', '{$_SESSION['name']}', 'dont't save user token')";
       $conn->query($sql);
     } else { //có rồi thì cập lại tên
-      $sql = "UPDATE user SET name = '{$name}'";
+      $sql = "UPDATE user SET name = '{$_SESSION['name']}'";
       $conn->query($sql);
     }
 	}
@@ -94,7 +92,7 @@
 		$idCode = $_SESSION['tempId'];
     $_SESSION['tempId'] = '';
     unset($_SESSION['tempId']);
-		$sql = "UPDATE code SET id_user='{$id}' WHERE id_code='{$idCode}'";
+		$sql = "UPDATE code SET id_user='{$_SESSION['id']}' WHERE id_code='{$idCode}'";
     echo $sql;
 		$conn->query($sql);
 		$conn->close();

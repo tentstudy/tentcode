@@ -14,7 +14,7 @@
             <option value="asn.1">ASN.1</option>
             <option value="asterisk">Asterisk dialplan</option>
             <option value="brainfuck">Brainfuck</option>
-            <option value="clike">C, C++, C#</option>
+            <option value="clike">C, C++</option>
             <option value="clojure">Clojure</option>
             <option value="cmake">CMake</option>
             <option value="cobol">COBOL</option>

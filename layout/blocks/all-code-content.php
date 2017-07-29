@@ -6,6 +6,7 @@
           <th>Name</th>
           <th>Language</th>
           <th>Update time</th>
+          <th>Update time</th>
       </tr>
     </thead>
     <tbody>

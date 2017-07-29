@@ -37,7 +37,7 @@ function changeLanguage(val) {
     CodeMirror.autoLoadMode(editor, mode);
     // document.getElementById("modeinfo").textContent = spec;
   } else {
-    alert("Could not find a mode corresponding to " + val);
+    showError("Could not find a mode corresponding to " + val);
   }
 }
 $(document).ready(function() {
@@ -102,5 +102,32 @@ $(document).ready(function() {
     showInfo('Link copied to clipboard');
   });
   //lấy 5 code mới nhất
-  
+  $.ajax({
+    url: '/ajax/list-code.php',
+    type: "POST",
+    data: {
+      from: 0,
+      numberRows: 5,
+      max: -1
+    },
+    dataType: 'json'
+  })
+  .then(function(response) {
+    // console.log(response);
+    if (response.success) {
+      var listCode = $('#list-new-code'); 
+      response.data.forEach(function(code) {
+        var item = `<li class="list-group-item" title="${code.title}">
+            <a href="/${code.id_code}">
+                <div class="codeName">${code.title}</div>
+                <div class="codeLanguage">Language: ${code.language}</div>
+                <div class="codeTime">${secondToTime(code.update_time)}</div>
+            </a>
+        </li>`;
+        listCode.append(item);
+      });
+    } else {
+      showInfo('Cannot load more data');
+    } 
+  });
 });

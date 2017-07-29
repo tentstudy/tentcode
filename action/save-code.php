@@ -1,4 +1,7 @@
 <?php
+    session_start();
+    require_once __DIR__ . '/../db/connect.php';
+    // var_dump($_POST);
     function exitWithSuccess($array) {
       $res = array_merge(
               array('success' => true),
@@ -16,8 +19,6 @@
     if (empty($_POST['action']) || !in_array($_POST['action'], $listActions)) {
         exitWithError();
     }
-    session_start();
-    require_once __DIR__ . '/../db/connect.php';
     function randomIdCode($length = 8)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -151,7 +152,7 @@
     // dữ liệu đầu vào
     $action   = $_POST['action'];
     $code     = $_POST['code'];
-    $idUser   = empty($_COOKIE['id']) ? '0' : $_COOKIE['id'];
+    $idUser   = empty($_SESSION['id']) ? '0' : $_SESSION['id'];
     $public   = empty($_POST['public']) ? true : $_POST['public'];
     $language = empty($_POST['language']) || !array_key_exists($_POST['language'], $fomat) ? 'javascript' : $_POST['language'];
     $title    = empty($_POST['title']) ? 'Untitled' : $_POST['title'];
@@ -180,9 +181,11 @@
             break;
         case 'edit':
             $sql = "UPDATE `code` 
-                    SET `title` = '{$title}, `language` = '{$language}', `update_time`='{$updateTime}',  
+                    SET `title` = '{$title}', `language` = '{$language}', `update_time`='{$updateTime}'  
                     WHERE `id_code`='{$idCode}' and `id_user`='{$idUser}' and `id_user` <> '0'";
             $result = $conn->query($sql);
+            // echo $sql;
+            // echo $conn->error;
             $conn->close();            
             if ($result === TRUE) {
                 // lưu vào file

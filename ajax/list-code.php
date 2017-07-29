@@ -1,5 +1,6 @@
 <?php
   require_once __DIR__ . '/../db/connect.php';
+  require_once __DIR__ . '/../lib/format.php';
   define('MAX_ROWS_PER_REQUEST', 20);
   function countRecords($conn) {
     $sql = "SELECT count(id) as num FROM code";
@@ -13,6 +14,7 @@
     $result = $conn->query($sql);
     $array = array();
     while ($row = $result->fetch_assoc()){
+        $row['language'] = getNameLanguage($row['language']);
         array_push($array, $row);
     }
     return $array;
@@ -38,7 +40,7 @@
     if ($from >= $total) {
       exitWithFalse('Out of data');
     }
-    if ($total > $max) {
+    if ($total > $max && $max != -1) {
       $diff = $total - $max;
       $data = getRecords($conn, 0, $diff);
       if ($diff > $numberRows) {

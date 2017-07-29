@@ -34,6 +34,7 @@
       $s['code'] = $data;
       //kiểm tra quyền
       $s['isOwned'] = $login ? checkPermision($conn, $idCode, $id, $s['title'], $s['language']) : false;
+      $s['ext'] = getExtLanguage($s['language']);
       if (!$s['isOwned'] && $s['action'] === 'edit') { //nếu không có quyền thì k đc sửa
         die(header("Location: /{$idCode}")); //điều hướng về trang xem
       }

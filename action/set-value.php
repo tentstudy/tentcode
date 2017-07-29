@@ -1,6 +1,6 @@
 <?php 
   require_once __DIR__ . '/../db/connect.php';
-
+  require_once __DIR__ . '/../lib/format.php';
   //kiểm tra quyền sở hữu của người dùng với code
   //đồng thời lấy ra title, language của code
   function checkPermision($conn, $idCode, $idUser, &$title, &$language) {

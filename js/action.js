@@ -1,3 +1,4 @@
+'use strict';
 function saveCode() {
   var code = editor.getValue();
   var action = $("#save-code").attr('button-action');
@@ -27,7 +28,7 @@ function saveCode() {
     res = JSON.parse(res);
     idCode = res.idCode;
     if (!res.success) { //không thành công thì về ngay trang chủ
-      // location.href = '/';
+      location.href = '/';
       return;
     }
 		if(parseInt(res.idUser) !== 0){ //id != 0 => đã đăng nhập, đã đăng nhập thì đến ngay trang xem

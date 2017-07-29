@@ -8,8 +8,8 @@
 	}
 	require_once __DIR__ . '/lib/curl.php';
 	require_once __DIR__ . '/db/connect.php';
-	define('client_id','111239596202717');
-	define('client_secret','b1464b01303b3cb278fc6833d0e81450');
+	define('client_id','107318816619233');
+	define('client_secret','e2120b5b73936e94717ba39036c261f2');
 	define('redirect_uri', 'http://tentcode.dev/login.php');
 	
 	function login()

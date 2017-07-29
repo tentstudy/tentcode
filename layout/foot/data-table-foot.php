@@ -14,7 +14,7 @@
       dataType: 'json'
     })
     .then(function(response) {
-      console.log(response);
+      // console.log(response);
       if (response.success) {
         from += response.data.length;
         max = response.max;
@@ -29,7 +29,7 @@
         });
         table.rows.add(tbdata).draw(false);
       } else {
-        alert('Cannot load more data');
+        showInfo('Cannot load more data');
       } 
     });
   }

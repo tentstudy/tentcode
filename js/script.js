@@ -2,15 +2,14 @@ function secondToTime(seconds) {
   var now = (new Date().getTime()) / 1000;
   var ago = now - seconds;
   if (ago > 86400) { //lớn hơn 1 ngày thì để ngày tháng
-    var date = new Date(new Date().getTime() - ago * 1000 + 7 * 86400000);
-    var hh = date.getUTCHours();
-    var mm = date.getUTCMinutes();
-    var ss = date.getSeconds();
-    if (hh < 10) {hh = "0"+hh;}
-    if (mm < 10) {mm = "0"+mm;}
-    if (ss < 10) {ss = "0"+ss;}
+    var date = new Date(seconds * 1000);
+    var month = date.getUTCMonth() + 1; //months from 1-12
+    var day = date.getUTCDate();
+    var year = date.getUTCFullYear();
+    if (day < 10) {day = "0"+day;}
+    if (month < 10) {month = "0"+month;}
     // This formats your string to HH:MM:SS
-    return t = hh+":"+mm+":"+ss;
+    return t = day+"-"+month+"-"+year;
   } else {
     var h = Math.floor(ago / 3600);
     var m = Math.floor(ago / 60);

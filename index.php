@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <title><?php g('browser-title'); ?></title>
         <link rel="shortcut icon" type="image/png" href="https://tentstudy.xyz/images/icons/favicon.png"/>
 

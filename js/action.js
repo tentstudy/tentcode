@@ -58,7 +58,7 @@ $(function action() {
         
       }
       location.href = '/';
-      return;
+      return false;
     });
   });
 });

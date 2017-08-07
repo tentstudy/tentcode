@@ -10,7 +10,7 @@
 	require_once __DIR__ . '/db/connect.php';
 	define('client_id','107318816619233');
 	define('client_secret','e2120b5b73936e94717ba39036c261f2');
-	define('redirect_uri', 'http://tentcode.dev/login.php');
+	define('redirect_uri', 'https://code.tentstudy.xyz/login.php');
 	
 	function login()
 	{

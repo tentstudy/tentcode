@@ -44,4 +44,21 @@ $(function action() {
     saveCode();
   });
 	$("#not-now").click(notNow);
+  $("#btn-fork").click( function(){
+    var code = editor.getValue();
+    var url = '/action/fork.php';
+    var data = {
+      'code': code
+    };
+    $.post(url, data, function(res) {
+      console.log(res);
+      res = JSON.parse(res);
+      if (!res.success) { //không thành công thì về ngay trang chủ
+        alert("An error occurred");
+        
+      }
+      location.href = '/';
+      return;
+    });
+  });
 });

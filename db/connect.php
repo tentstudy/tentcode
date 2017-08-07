@@ -1,5 +1,5 @@
 <?php 
-	require_once __DIR__ . '/config.php';
+	require_once __DIR__ . '/configdb.php';
 	$conn = new mysqli(host, username, password, database);
 
 	// Check connection

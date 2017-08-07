@@ -28,9 +28,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <!-- <li><a href="#">My profile</a></li> -->
-                            <li><a href="#">My code</a></li>
+                            <!-- <li><a href="#">My code</a></li> -->
                             <!-- <li><a href="#">Settings</a></li> -->
-                            <li role="separator" class="divider"></li>
+                            <!-- <li role="separator" class="divider"></li> -->
                             <li><a href="/logout.php">Logout</a></li>
                         </ul>
                     </li>

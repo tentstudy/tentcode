@@ -8,7 +8,7 @@
                 echo '<a href="edit/' . $idCode . '" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</a>';
               } 
             ?>
-            <button class="btn btn-default"><span class="glyphicon glyphicon-duplicate"></span> Fork</button>
+            <button id="btn-fork" class="btn btn-default"><span class="glyphicon glyphicon-duplicate"></span> Fork</button>
             <a href="<?php echo "/action/download-code.php?i={$idCode}&n=" . g_value('title') . '.' . g_value('ext'); ?>" class="btn btn-default" target="_blank"><span class="glyphicon glyphicon-download-alt"></span> Download</a>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="shareDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

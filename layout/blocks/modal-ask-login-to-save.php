@@ -10,8 +10,8 @@
                 You are not login, so your code cannot edit later
             </div>
             <div class="modal-footer">
-                <a href="login.php?action=save" id="login-to-save" class="btn btn-primary">Đăng nhập với Facebook</a>
-                <button type="button" id="not-now" class="btn btn-default" data-dismiss="modal">Lúc khác</button>
+                <a href="login.php?action=save" id="login-to-save" class="btn btn-primary">Login with Facebook</a>
+                <button type="button" id="not-now" class="btn btn-default" data-dismiss="modal">Not now</button>
             </div>
         </div>
     </div>

@@ -18,10 +18,12 @@
   <span class="glyphicon glyphicon-floppy-disk"></span> 
   Save
 </button>';
+  $id = 0;
 	if($login) {
 		$id    = $_SESSION['id'];
 		$name  = $_SESSION['name'];
-		$s['btn-login'] = "<a href=\"https://fb.com/{$id}\">{$name}</a>";
+    $s['btn-login'] = "<a href=\"#\">{$name}</a>";
+		// $s['btn-login'] = "<a href=\"https://fb.com/{$id}\">{$name}</a>";
 		$s['btn-save'] = '
 <button type="submit" id="save-code" class="btn btn-primary" button-action="' . $s['action'] . '">
   <span class="glyphicon glyphicon-floppy-disk"></span> 
@@ -33,7 +35,7 @@
     if ($data) { //nếu file tồn tại
       $s['code'] = $data;
       //kiểm tra quyền
-      $s['isOwned'] = $login ? checkPermision($conn, $idCode, $id, $s['title'], $s['language']) : false;
+      $s['isOwned'] = checkPermision($conn, $idCode, $id, $s['title'], $s['language']) && $login;
       $s['ext'] = getExtLanguage($s['language']);
       if (!$s['isOwned'] && $s['action'] === 'edit') { //nếu không có quyền thì k đc sửa
         die(header("Location: /{$idCode}")); //điều hướng về trang xem
@@ -42,6 +44,10 @@
       die(header('Location: /')); //không tồn tại file thì về trang chủ
     }
 	}
+  if (!empty($_SESSION['forked'])) {
+    $s['code'] = $_SESSION['forked'];
+    unset($_SESSION['forked']);
+  }
   $s['browser-title'] = $s['action'] == 'view' || $s['action'] == 'edit' 
                         ? $s['title'] . ' - TentCode' : 'TentCode - TentStudy';
   $conn->close();

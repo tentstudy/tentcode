@@ -82,7 +82,6 @@
 	if(empty($token)){ // nếu chưa đăng nhập thì đăng nhập
 		return login();
 	}
-  $conn->close();
 
   //cập nhật quyền cho code nếu người dùng chọn Đăng nhập để lưu
   if (!empty($_SESSION['tempId']) && !empty($_SESSION['action']) && $_SESSION['action'] == 'save'){
@@ -99,6 +98,7 @@
 		header("Location: ./{$idCode}");
 		exit();
 	}
+  $conn->close();
   //không có trang phía trước thì điều hướng về trang chủ
   $location = empty($_SESSION['prev']) ? '/' : $_SESSION['prev'];
   unset($_SESSION['prev']);

@@ -10,7 +10,7 @@
   }
   function getRecords($conn, $from, $numberRows) {
     $sql = "SELECT id_code, title, language, update_time
-            FROM code ORDER BY update_time DESC LIMIT {$from}, {$numberRows}";
+            FROM code WHERE public = 1 ORDER BY update_time DESC LIMIT {$from}, {$numberRows}";
     $result = $conn->query($sql);
     $array = array();
     while ($row = $result->fetch_assoc()){

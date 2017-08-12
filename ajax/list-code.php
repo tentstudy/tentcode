@@ -3,7 +3,7 @@
   require_once __DIR__ . '/../lib/format.php';
   define('MAX_ROWS_PER_REQUEST', 20);
   function countRecords($conn) {
-    $sql = "SELECT count(id) as num FROM code";
+    $sql = "SELECT count(id) as num FROM code WHERE public = 1";
     $result = $conn->query($sql);
     $array = $result->fetch_assoc();
     return $array['num'];
